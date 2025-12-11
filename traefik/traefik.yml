@@ -12,7 +12,7 @@ entryPoints:
           to: web-secure
           # scheme: https # all will redirect to https
 
-  traefik:
+  web-secure:
     # https
     address: ":443"
 
