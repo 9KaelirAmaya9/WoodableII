@@ -37,7 +37,7 @@ if [ $SCP_EXIT -ne 0 ]; then
 fi
 
 echo "[INFO] Running remote setup and streaming logs..."
-ssh -v -o StrictHostKeyChecking=no -i "$SSH_KEY" root@"$DROPLET_IP" "cd $REMOTE_PATH && source venv/bin/activate && npm install && bash scripts/start.sh --build & BUILD_PID=$!; echo '--- Streaming Docker Container Logs ---'; while kill -0 $BUILD_PID 2>/dev/null; do docker ps --format '{{.Names}}' | xargs -I {} sh -c 'echo ==== {} ====; docker logs --tail=20 {}'; sleep 5; done; wait $BUILD_PID; echo 'Build completed.'"
+ssh -v -o StrictHostKeyChecking=no -i "$SSH_KEY" root@"$DROPLET_IP" "cd $REMOTE_PATH && source venv/bin/activate && bash scripts/start.sh --build & BUILD_PID=$!; echo '--- Streaming Docker Container Logs ---'; while kill -0 $BUILD_PID 2>/dev/null; do docker ps --format '{{.Names}}' | xargs -I {} sh -c 'echo ==== {} ====; docker logs --tail=20 {}'; sleep 5; done; wait $BUILD_PID; echo 'Build completed.'"
 SSH_EXIT=$?
 if [ $SSH_EXIT -ne 0 ]; then
   echo "[ERROR] ssh failed with exit code $SSH_EXIT"
