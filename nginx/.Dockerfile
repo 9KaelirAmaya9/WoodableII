@@ -1,8 +1,10 @@
 # Dockerfile for Nginx (Frontend)
 # Multi-stage build: Build React App -> Serve with Nginx
 
-# --- Stage 1: Build React App ---
 ARG REACT_APP_NODE_VERSION=18-alpine
+ARG NGINX_VERSION=1.25-alpine
+
+# --- Stage 1: Build React App ---
 FROM node:${REACT_APP_NODE_VERSION} AS build
 
 WORKDIR /app
@@ -19,7 +21,6 @@ COPY ./react-app/ .
 RUN npm run build
 
 # --- Stage 2: Serve with Nginx ---
-ARG NGINX_VERSION=1.25-alpine
 FROM nginx:${NGINX_VERSION}
 
 # Install envsubst
@@ -62,6 +63,6 @@ EXPOSE ${NGINX_PORT}
 
 # Health Check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:${NGINX_PORT}/health || exit 1
+    CMD wget --quiet --tries=1 --spider http://localhost:${NGINX_PORT}/health || exit 1
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
