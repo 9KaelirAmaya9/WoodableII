@@ -125,15 +125,15 @@ services:
       - NGINX_WORKER_PROCESSES=${NGINX_WORKER_PROCESSES}
       - NGINX_WORKER_CONNECTIONS=${NGINX_WORKER_CONNECTIONS}
       - NGINX_PORT=${NGINX_PORT}
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.frontend.rule=Host(${WEBSITE_DOMAIN})"
-        - "traefik.http.routers.frontend.entrypoints=websecure"
-        - "traefik.http.routers.frontend.tls.certresolver=letsencrypt"
-        - "traefik.http.routers.frontend-http.rule=Host(${WEBSITE_DOMAIN})"
-        - "traefik.http.routers.frontend-http.entrypoints=web"
-        - "traefik.http.routers.frontend-http.middlewares=redirect-to-https"
-        - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(${WEBSITE_DOMAIN})"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.frontend-http.rule=Host(${WEBSITE_DOMAIN})"
+      - "traefik.http.routers.frontend-http.entrypoints=web"
+      - "traefik.http.routers.frontend-http.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
     networks:
       - base2_network
     restart: unless-stopped
