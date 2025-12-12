@@ -5,6 +5,7 @@ const {
     createOrder,
     getAllOrders,
     updateOrderStatus,
+    getAnalytics,
 } = require('../controllers/orderController');
 const { protect, optionalProtect, restrictTo } = require('../middleware/auth');
 
@@ -21,6 +22,7 @@ router.post(
 );
 
 // Admin Routes
+router.get('/analytics', protect, restrictTo('admin'), getAnalytics);
 router.get('/', protect, restrictTo('admin'), getAllOrders);
 
 router.put(

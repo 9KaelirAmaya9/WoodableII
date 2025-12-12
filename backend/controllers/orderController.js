@@ -149,8 +149,61 @@ const updateOrderStatus = async (req, res) => {
     }
 };
 
+// @desc    Get analytics data (Admin)
+// @route   GET /api/orders/analytics
+// @access  Private (Admin)
+const getAnalytics = async (req, res) => {
+    try {
+        const client = await pool.connect();
+        try {
+            // 1. Daily Sales (Last 30 days)
+            const dailySales = await client.query(`
+        SELECT TO_CHAR(created_at, 'YYYY-MM-DD') as date, SUM(total_price) as revenue, COUNT(*) as orders
+        FROM orders
+        WHERE status != 'cancelled' AND created_at > NOW() - INTERVAL '30 days'
+        GROUP BY 1
+        ORDER BY 1 ASC
+      `);
+
+            // 2. Popular Items
+            const popularItems = await client.query(`
+        SELECT item_name, SUM(quantity) as count
+        FROM order_items
+        GROUP BY 1
+        ORDER BY 2 DESC
+        LIMIT 5
+      `);
+
+            // 3. Overall Stats
+            const stats = await client.query(`
+        SELECT 
+          COUNT(*) as total_orders,
+          SUM(CASE WHEN status != 'cancelled' THEN total_price ELSE 0 END) as total_revenue,
+          AVG(CASE WHEN status != 'cancelled' THEN total_price ELSE 0 END) as avg_order_value
+        FROM orders
+      `);
+
+            res.json({
+                success: true,
+                data: {
+                    daily_sales: dailySales.rows,
+                    popular_items: popularItems.rows,
+                    stats: stats.rows[0]
+                }
+            });
+        } finally {
+            client.release();
+        }
+    } catch (error) {
+        console.error('Analytics error:', error);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
 module.exports = {
     createOrder,
     getAllOrders,
     updateOrderStatus,
+    getAnalytics,
 };
+
