@@ -2,8 +2,11 @@ import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import Navigation from '../components/Navigation';
 
+import { useNavigate } from 'react-router-dom';
+
 const Dashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div style={styles.container}>
@@ -43,6 +46,28 @@ const Dashboard = () => {
             <p style={styles.cardLabel}>Average Score</p>
           </div>
         </div>
+
+        {user?.role === 'admin' && (
+          <div style={styles.section}>
+            <h2 style={styles.sectionTitle}>Admin Controls</h2>
+            <div style={styles.actionGrid}>
+              <button
+                style={{ ...styles.actionButton, background: '#667eea', color: 'white', border: 'none' }}
+                onClick={() => navigate('/admin/orders')}
+              >
+                <span style={styles.actionIcon}>👨‍🍳</span>
+                <span>Active Orders</span>
+              </button>
+              <button
+                style={{ ...styles.actionButton, background: '#333', color: 'white', border: 'none' }}
+                onClick={() => navigate('/admin/menu')}
+              >
+                <span style={styles.actionIcon}>🌮</span>
+                <span>Manage Menu</span>
+              </button>
+            </div>
+          </div>
+        )}
 
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>Recent Activity</h2>

@@ -11,6 +11,7 @@ import VerifyEmail from './pages/VerifyEmail';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import MenuManager from './pages/admin/MenuManager';
+import OrderDashboard from './pages/admin/OrderDashboard';
 import Menu from './pages/Menu';
 import './App.css';
 
@@ -51,6 +52,14 @@ function App() {
                 element={
                   <ProtectedRoute allowedRoles={['admin']}>
                     <MenuManager />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/orders"
+                element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <OrderDashboard />
                   </ProtectedRoute>
                 }
               />
