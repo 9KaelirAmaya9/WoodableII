@@ -12,6 +12,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import MenuManager from './pages/admin/MenuManager';
 import OrderDashboard from './pages/admin/OrderDashboard';
+import AnalyticsDashboard from './pages/admin/AnalyticsDashboard';
 import Menu from './pages/Menu';
 import './App.css';
 
@@ -60,6 +61,14 @@ function App() {
                 element={
                   <ProtectedRoute allowedRoles={['admin']}>
                     <OrderDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/analytics"
+                element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <AnalyticsDashboard />
                   </ProtectedRoute>
                 }
               />

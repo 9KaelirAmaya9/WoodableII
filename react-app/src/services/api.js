@@ -140,6 +140,11 @@ export const orderAPI = {
     const response = await api.put(`/orders/${id}/status`, { status });
     return response.data;
   },
+
+  getAnalytics: async () => {
+    const response = await api.get('/orders/analytics');
+    return response.data;
+  },
 };
 
 export default api;

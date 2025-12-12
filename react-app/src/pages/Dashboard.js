@@ -65,6 +65,13 @@ const Dashboard = () => {
                 <span style={styles.actionIcon}>🌮</span>
                 <span>Manage Menu</span>
               </button>
+              <button
+                style={{ ...styles.actionButton, background: '#82ca9d', color: 'white', border: 'none' }}
+                onClick={() => navigate('/admin/analytics')}
+              >
+                <span style={styles.actionIcon}>📈</span>
+                <span>Analytics</span>
+              </button>
             </div>
           </div>
         )}
