@@ -33,7 +33,7 @@ const protect = async (req, res, next) => {
 
     // Get user from database
     const result = await query(
-      'SELECT id, email, name, picture, email_verified, auth_provider FROM users WHERE id = $1',
+      'SELECT id, email, name, picture, email_verified, auth_provider, role FROM users WHERE id = $1',
       [decoded.id]
     );
 
@@ -56,6 +56,20 @@ const protect = async (req, res, next) => {
   }
 };
 
+// Grant access to specific roles
+const restrictTo = (...roles) => {
+  return (req, res, next) => {
+    // If user role is not in the allowed roles
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({
+        success: false,
+        message: 'You do not have permission to perform this action',
+      });
+    }
+    next();
+  };
+};
+
 // Check if email is verified
 const requireVerifiedEmail = (req, res, next) => {
   if (!req.user.email_verified) {
@@ -69,5 +83,6 @@ const requireVerifiedEmail = (req, res, next) => {
 
 module.exports = {
   protect,
+  restrictTo,
   requireVerifiedEmail,
 };
