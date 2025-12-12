@@ -1,7 +1,7 @@
 # Dockerfile for Traefik
 # Robust Traefik configuration with environment variable support
 
-ARG TRAEFIK_VERSION=v3.0
+ARG TRAEFIK_VERSION=latest
 FROM traefik:${TRAEFIK_VERSION}
 
 # Set build arguments for environment variables
