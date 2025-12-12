@@ -9,6 +9,7 @@ import UserSettings from './pages/UserSettings';
 import VerifyEmail from './pages/VerifyEmail';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import MenuManager from './pages/admin/MenuManager';
 import './App.css';
 
 // Replace this with your actual Google Client ID
@@ -25,21 +26,29 @@ function App() {
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route 
-              path="/dashboard" 
+            <Route
+              path="/dashboard"
               element={
                 <ProtectedRoute>
                   <Dashboard />
                 </ProtectedRoute>
-              } 
+              }
             />
-            <Route 
-              path="/settings" 
+            <Route
+              path="/settings"
               element={
                 <ProtectedRoute>
                   <UserSettings />
                 </ProtectedRoute>
-              } 
+              }
+            />
+            <Route
+              path="/admin/menu"
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <MenuManager />
+                </ProtectedRoute>
+              }
             />
           </Routes>
         </Router>

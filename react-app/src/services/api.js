@@ -90,4 +90,38 @@ export const authAPI = {
   },
 };
 
+// Menu API calls
+export const menuAPI = {
+  getCategories: async () => {
+    const response = await api.get('/menu/categories');
+    return response.data;
+  },
+
+  getItems: async () => {
+    const response = await api.get('/menu/items');
+    return response.data;
+  },
+
+  createCategory: async (data) => {
+    const response = await api.post('/menu/categories', data);
+    return response.data;
+  },
+
+  createItem: async (data) => {
+    const response = await api.post('/menu/items', data);
+    return response.data;
+  },
+
+  updateItem: async (id, data) => {
+    const response = await api.put(`/menu/items/${id}`, data);
+    return response.data;
+  },
+
+  deleteItem: async (id) => {
+    const response = await api.delete(`/menu/items/${id}`);
+    return response.data;
+  },
+};
+
+
 export default api;
