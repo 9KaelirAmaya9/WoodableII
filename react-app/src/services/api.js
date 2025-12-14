@@ -147,4 +147,40 @@ export const orderAPI = {
   },
 };
 
+// Work Order API calls
+export const workOrderAPI = {
+  createWorkOrder: async (data) => {
+    const response = await api.post('/workorders', data);
+    return response.data;
+  },
+
+  getWorkOrders: async (filters = {}) => {
+    const response = await api.get('/workorders', { params: filters });
+    return response.data;
+  },
+
+  getWorkOrderById: async (id) => {
+    const response = await api.get(`/workorders/${id}`);
+    return response.data;
+  },
+
+  updateWorkOrder: async (id, data) => {
+    const response = await api.put(`/workorders/${id}`, data);
+    return response.data;
+  },
+
+  deleteWorkOrder: async (id) => {
+    const response = await api.delete(`/workorders/${id}`);
+    return response.data;
+  },
+
+  downloadPDF: async (id) => {
+    const response = await api.get(`/workorders/${id}/pdf`, {
+      responseType: 'blob',
+    });
+    return response.data;
+  },
+};
+
+
 export default api;

@@ -13,6 +13,8 @@ import ResetPassword from './pages/ResetPassword';
 import MenuManager from './pages/admin/MenuManager';
 import OrderDashboard from './pages/admin/OrderDashboard';
 import AnalyticsDashboard from './pages/admin/AnalyticsDashboard';
+import WorkOrderDashboard from './pages/admin/WorkOrderDashboard';
+import WorkOrderForm from './pages/admin/WorkOrderForm';
 import Menu from './pages/Menu';
 import './App.css';
 
@@ -69,6 +71,30 @@ function App() {
                 element={
                   <ProtectedRoute allowedRoles={['admin']}>
                     <AnalyticsDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/workorders"
+                element={
+                  <ProtectedRoute allowedRoles={['admin', 'employee']}>
+                    <WorkOrderDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/workorders/new"
+                element={
+                  <ProtectedRoute allowedRoles={['admin', 'employee']}>
+                    <WorkOrderForm />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/workorders/:id"
+                element={
+                  <ProtectedRoute allowedRoles={['admin', 'employee']}>
+                    <WorkOrderForm />
                   </ProtectedRoute>
                 }
               />

@@ -72,6 +72,13 @@ const Dashboard = () => {
                 <span style={styles.actionIcon}>📈</span>
                 <span>Analytics</span>
               </button>
+              <button
+                style={{ ...styles.actionButton, background: '#C00000', color: 'white', border: 'none' }}
+                onClick={() => navigate('/admin/workorders')}
+              >
+                <span style={styles.actionIcon}>🔧</span>
+                <span>Work Orders</span>
+              </button>
             </div>
           </div>
         )}
@@ -108,9 +115,12 @@ const Dashboard = () => {
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>Quick Actions</h2>
           <div style={styles.actionGrid}>
-            <button style={styles.actionButton}>
-              <span style={styles.actionIcon}>📝</span>
-              <span>Create New</span>
+            <button
+              style={styles.actionButton}
+              onClick={() => navigate('/admin/workorders/new')}
+            >
+              <span style={styles.actionIcon}>🔧</span>
+              <span>Create Work Order</span>
             </button>
             <button style={styles.actionButton}>
               <span style={styles.actionIcon}>📤</span>
