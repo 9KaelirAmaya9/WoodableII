@@ -1,0 +1,13 @@
+[Unit]
+Description=Los Ricos Tacos Database Backup
+After=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/Users/jancarlosinc/Desktop/WoodableI/Woodable1/scripts
+ExecStart=/Users/jancarlosinc/Desktop/WoodableI/Woodable1/scripts/backup-db.sh
+ExecStartPost=/Users/jancarlosinc/Desktop/WoodableI/Woodable1/scripts/cleanup-old-backups.sh
+User=jancarlosinc
+
+[Install]
+WantedBy=multi-user.target

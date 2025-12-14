@@ -7,7 +7,7 @@ const { query } = require('../config/database');
 const getCategories = async (req, res) => {
     try {
         const result = await query(
-            'SELECT * FROM menu_categories ORDER BY sort_order ASC'
+            'SELECT * FROM categories ORDER BY display_order ASC'
         );
         res.json({
             success: true,
@@ -27,9 +27,9 @@ const getItems = async (req, res) => {
         const result = await query(
             `SELECT m.*, c.name as category_name 
        FROM menu_items m 
-       LEFT JOIN menu_categories c ON m.category_id = c.id 
+       LEFT JOIN categories c ON m.category_id = c.id 
        WHERE m.is_available = true 
-       ORDER BY c.sort_order ASC, m.id ASC`
+       ORDER BY c.display_order ASC, m.id ASC`
         );
         res.json({
             success: true,
@@ -50,14 +50,14 @@ const createCategory = async (req, res) => {
         return res.status(400).json({ success: false, errors: errors.array() });
     }
 
-    const { name, description, sort_order } = req.body;
+    const { name, description, display_order } = req.body;
 
     try {
         const result = await query(
-            `INSERT INTO menu_categories (name, sort_order) 
+            `INSERT INTO categories (name, display_order) 
        VALUES ($1, $2) 
        RETURNING *`,
-            [name, sort_order || 0]
+            [name, display_order || 0]
         );
 
         res.status(201).json({

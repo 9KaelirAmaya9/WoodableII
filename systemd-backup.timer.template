@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily backup timer for Los Ricos Tacos database
+
+[Timer]
+OnCalendar=daily
+OnCalendar=02:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
