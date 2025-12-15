@@ -65,40 +65,36 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
-
 // Start server
-app.listen(PORT, () => {
-  console.log(`
-╔══════════════════════════════════════════════════════╗
-║                                                      ║
-║  🚀 Base2 Backend Server                            ║
-║                                                      ║
-║  Server running on: http://localhost:${PORT}         ║
-║  Environment: ${process.env.NODE_ENV || 'development'}                          ║
-║                                                      ║
-║  Available routes:                                   ║
-║  - POST   /api/auth/register                        ║
-║  - POST   /api/auth/login                           ║
-║  - GET    /api/auth/verify-email/:token             ║
-║  - POST   /api/auth/resend-verification             ║
-║  - POST   /api/auth/forgot-password                 ║
-║  - POST   /api/auth/reset-password/:token           ║
-║  - GET    /api/auth/me                              ║
-║  - POST   /api/auth/google                          ║
-║  - GET    /api/health                               ║
-║                                                      ║
-╚══════════════════════════════════════════════════════╝
-  `);
+const PORT = process.env.PORT || process.env.BACKEND_PORT || 5001;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`\n╔══════════════════════════════════════════════════════╗`);
+  console.log(`║                                                      ║`);
+  console.log(`║  🚀 Base2 Backend Server                            ║`);
+  console.log(`║                                                      ║`);
+  console.log(`║  Server running on: http://localhost:${PORT.toString().padEnd(9)}      ║`);
+  console.log(`║  Environment: ${(process.env.NODE_ENV || 'development').padEnd(10)}                     ║`);
+  console.log(`║                                                      ║`);
+  console.log(`║  Available routes:                                   ║`);
+  console.log(`║  - POST   /api/auth/register                        ║`);
+  console.log(`║  - POST   /api/auth/login                           ║`);
+  console.log(`║  - GET    /api/auth/verify-email/:token             ║`);
+  console.log(`║  - POST   /api/auth/resend-verification             ║`);
+  console.log(`║  - POST   /api/auth/forgot-password                 ║`);
+  console.log(`║  - POST   /api/auth/reset-password/:token           ║`);
+  console.log(`║  - GET    /api/auth/me                              ║`);
+  console.log(`║  - POST   /api/auth/google                          ║`);
+  console.log(`║  - GET    /api/health                               ║`);
+  console.log(`║                                                      ║`);
+  console.log(`╚══════════════════════════════════════════════════════╝\n`);
 });
 
 // Graceful shutdown
-process.on('SIGTERM', () => {
+process.on('SIGTERM', async () => {
   console.log('SIGTERM received, shutting down gracefully...');
-  pool.end(() => {
-    console.log('Database pool closed');
-    process.exit(0);
-  });
+  await pool.end();
+  console.log('Database pool closed');
+  process.exit(0);
 });
 
 process.on('SIGINT', () => {
